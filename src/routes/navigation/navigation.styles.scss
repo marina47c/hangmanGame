@@ -1,0 +1,53 @@
+.navigation {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    border-bottom: 3px;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.423);
+    //box-shadow: 0 0 20px rgba(85, 26, 139, 0.6);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    background-color: rgb(227, 227, 230);
+
+    .logo-container {
+      height: 100%;
+      padding: 5px;
+      display: flex;
+
+      span:hover {
+        color: black;
+      }
+    }
+  
+    .nav-links-container {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 30px;
+      padding-right: 20px;
+    }
+
+    .logo {
+        height: 100%;
+        width: 45px;
+    }
+
+    .logo-game-name {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-family: cursive;
+    }
+
+    .sign-out {
+      cursor: pointer;
+    }
+
+    .sign-out:hover {
+      color: purple;
+    }
+  }

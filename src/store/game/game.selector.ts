@@ -1,0 +1,1 @@
+export const selectQuote = (state: any) => state.game.quote;

@@ -1,0 +1,23 @@
+.sign-in-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    button {
+        width: 300px;
+    }
+
+    input {
+        height: 27px;
+    }
+
+    .name-field {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+    }
+
+    .name-message {
+        color: red;
+    }
+}

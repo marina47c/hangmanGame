@@ -1,0 +1,38 @@
+.game-container {
+  display: flex;
+  flex-direction: row;
+  padding: 2%;
+  gap: 30px;
+
+  .game-left-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    flex: 70%;
+    align-items: center;
+
+    .game-quote {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .quote-content {
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      font-size: x-large;
+    }
+
+    .quote-author {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .game-right-container {
+    flex: 30%;
+  }
+}
