@@ -4,3 +4,18 @@
   justify-content: center;
   gap: 2px;
 }
+
+.quote-content {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.quote-word, .quote-mark{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2px;
+  font-size: xx-large;
+}

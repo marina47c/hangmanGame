@@ -1,57 +1,57 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectQuote } from "../../store/game/game.selector";
 import { Button, } from "@radix-ui/themes";
 import './quote.styles.scss';
 import { Label } from "@radix-ui/react-label";
+import React from "react";
+import { Word } from "..";
+import DialogDemo from "../radixDialog/radixDialog.component";
 
-const alphabet: string[] = ['A', 'B', 'C', 'D', 'E', 'F',
-  'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-  'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+const alphabet: string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const specialCharacters: string[] = ['.', ',', '"', '\'', '?', '!', ':', '&', ' '];
+const errosBrakepoint: number = 1;
 
 const Quote = () => {
-  const [blindQuoteContent, setBlindQuoteContent] = useState<string>('');
+  const [blindQuote, setBlindQuote] = useState<string[][]>([]);
   const [chosenLetters, setChosenLetters] = useState<string[]>([]);
   const [currentLetter, setCurrentLetter] = useState<string>();
   const [errors, setErrors] = useState<number>(0);
+  const [gameOver, setGameOver] = useState<boolean>(false);
+  const [gameSuccess, setGameSuccess] = useState<boolean>(false);
   const quote = useSelector(selectQuote);
 
   useEffect(() => {
-    const quoteWithSpaces = addSpaceAfterEveryCharacter(quote?.content || '');
-    const blindQuote = replaceLettersWithUnderscore(quoteWithSpaces);
-    setBlindQuoteContent(blindQuote);
-    setChosenLetters([]);
-    setErrors(0);
-  },[quote]);
+    setBlindQuote(getBlindQuote(quote.content, chosenLetters));
+  },[quote, chosenLetters]);
 
   useEffect(() => {
-    //set blind quote content
-    const quoteWithSpaces = addSpaceAfterEveryCharacter(quote?.content || '');
-    const blindQuote = replaceLettersWithUnderscore(quoteWithSpaces, chosenLetters);
-    setBlindQuoteContent(blindQuote);
+    setChosenLetters([]);
+    setErrors(0);
+  }, [quote]);
 
-    //set errors
-    const contains: boolean = blindQuote.split('').some((l: string) => l.toLowerCase() === currentLetter?.toLowerCase());
-    setErrors(prevState => contains === true ? prevState : prevState + 1 );
-  }, [chosenLetters]);
+  useEffect(() => {
+    if (chosenLetters.length > 0){
+      const contains = quote.content.toLowerCase().includes(currentLetter?.toLowerCase());
+      setErrors(prevErrors => contains ? prevErrors : prevErrors + 1);
+    }
+  }, [chosenLetters, currentLetter, quote.content]);
 
-  function replaceLettersWithUnderscore(str: string, chosenLetters: string[] = []): string {
-    // Create a set of chosen letters for quick lookup, handling case insensitivity.
-    const chosenSet = new Set(chosenLetters.map(letter => letter.toLowerCase()));
+  useEffect(() => {
+    if (errors > errosBrakepoint){
+      setGameOver(true);
+    }
+  }, [errors])
 
-    // Use a regular expression to replace all alphabetic characters, considering case insensitivity.
-    return str.replace(/[a-zA-Z]/g, match => {
-      return chosenSet.has(match.toLowerCase()) ? match : '_';
+  const getBlindQuote = useCallback((quote: string, choosenLetters: string[] = []) => {
+    return quote.split(' ').map((word: string) => {
+      return word.split('').map((mark: string) => {
+        const markIsSpecialCharacter: boolean = specialCharacters.some((character: string) => character === mark);
+        const markISInChosenLetters: boolean = choosenLetters.some((letter: string) => letter.toLowerCase() === mark.toLowerCase());
+        return (markIsSpecialCharacter || markISInChosenLetters) ? mark : '_';  
+      });
     });
-  }
-
-  const addSpaceAfterEveryCharacter = (str: string): string => {
-    return str
-        .split('')
-        .map(char => char === ' ' ? '\u00A0\u00A0' : `${char}\u00A0`)
-        .join('')
-        .trimEnd();
-}
+  }, []);
 
   const isDisabled = (letter: string) => {
     return chosenLetters.includes(letter);
@@ -64,13 +64,21 @@ const Quote = () => {
     setCurrentLetter(letter);
   }
 
+  const Quote = () => {
+    return blindQuote.map((word: string[], index: number) => 
+      <Word key={index} word={word} />
+    )
+  };
+
   return (
     <>
       <div className='game-quote'>
-        <span className="quote-content">"{blindQuoteContent}"</span>
+        <div className="quote-content">
+          {Quote()}
+        </div>
         <div className="quote-author">Author: {quote.author}</div>
       </div>
-      <Label>Errors: {errors}</Label>
+     
       <div className="quote-buttons">
         {alphabet.map((letter: string) => (
           <Button key={letter} disabled={isDisabled(letter)} onClick={handleButtonClick} value={letter}>
@@ -78,6 +86,15 @@ const Quote = () => {
           </Button>
         ))}
       </div>
+
+      <Label>Errors: {errors}</Label>
+
+      {gameOver && (
+         <div>
+         <DialogDemo></DialogDemo>
+       </div>
+       
+      )}
     </>
   )
 }

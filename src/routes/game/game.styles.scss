@@ -4,7 +4,7 @@
   padding: 2%;
   gap: 30px;
 
-  .game-left-container {
+  .game-container__left {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -32,7 +32,7 @@
     }
   }
 
-  .game-right-container {
+  .game-container__right {
     flex: 30%;
   }
 }

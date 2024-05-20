@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <Theme accentColor="purple" grayColor="sand" radius="large" scaling="95%">
       <Provider store={store}>
         <BrowserRouter>
@@ -23,7 +23,7 @@ root.render(
         </BrowserRouter>
       </Provider>
     </Theme>
-  // </React.StrictMode>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
