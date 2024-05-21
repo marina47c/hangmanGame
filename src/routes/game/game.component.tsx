@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuote } from "../../utils/axios/axios.utils";
 import { Button } from "@radix-ui/themes";
+import { getQuote } from "../../utils/axios/axios.utils";
+
 import { setQuote } from "../../store/game/game.action";
 import { selectQuote } from "../../store/game/game.selector";
 import { Loading, Quote } from "../../components";
+import { ReactComponent as HangmanImage } from '../../assets/hagman_logo.svg'
 import './game.styles.scss';
 
 const Game = () => {
@@ -65,13 +67,15 @@ const Game = () => {
                     <Quote />
                     <Button 
                         onClick={handleGetNewQuoteButtonClick} 
-                        variant='soft' 
+                        variant='surface' 
                         disabled={loading}
                     >
                         {loading ? "Loading..." : "Get New Quote"}
                     </Button>
                 </div>
-                <div className='game-container__right'>place for hangman image</div>
+                <div className='game-container__right'>
+                    <HangmanImage className='hangman-image' />
+                </div>
             </div >
         ) : 
         <Loading size='large'/>    

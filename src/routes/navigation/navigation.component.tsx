@@ -1,11 +1,11 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ReactComponent as HangmanLogo } from '../../assets/hagman_logo.svg'
 import { clearCurrentUser } from "../../store/authentication/authentication.action";
 import { selectCurrentUser } from '../../store/authentication/authentication.selector';
-import './navigation.styles.scss'
 import { isAuthenticated } from "../../utils/authentication/authentication.utils";
+import { ReactComponent as HangmanLogo } from '../../assets/hagman_logo.svg'
+import './navigation.styles.scss'
 
 const Navigation = () => {
     const currentUser = useSelector(selectCurrentUser);

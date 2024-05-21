@@ -3,6 +3,7 @@
   flex-direction: row;
   padding: 2%;
   gap: 30px;
+  height: 100vh;
 
   .game-container__left {
     display: flex;
@@ -34,5 +35,12 @@
 
   .game-container__right {
     flex: 30%;
+    display: flex;
+    align-items: center;
+  }
+
+  .hangman-image {
+    max-height: 100%;
+    max-width: 100%;
   }
 }
