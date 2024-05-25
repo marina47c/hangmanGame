@@ -2,28 +2,30 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@radix-ui/themes";
 import { getQuote } from "../../utils/axios/axios.utils";
+import { getUser } from "../../utils/authentication/authentication.utils";
 
-import { setQuote } from "../../store/game/game.action";
+import { clearChosenLetters, setErrorsCount, setQuote } from "../../store/game/game.action";
 import { selectQuote } from "../../store/game/game.selector";
-import { Loading, Quote } from "../../components";
-import { ReactComponent as HangmanImage } from '../../assets/hagman_logo.svg'
-import './game.styles.scss';
+import { GameStatus, Loading, GameBoard } from "../../components";
+import { ReactComponent as HangmanImage } from '../../assets/hangman_logo.svg'
+import './gameContainer.styles.scss';
 
-const Game = () => {
+const GameContainer = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const quote = useSelector(selectQuote);
+    const currentUser = getUser();
     const dispatch = useDispatch();
 
     useEffect(() => {
         let ignore = false;
 
         const fetchQuote = async () => {
-            if (quote){
+            if (quote) {
                 return;
             }
 
             setLoading(true);
-            
+
             try {
                 const fetchedQuote = await getQuote();
                 if (!ignore && fetchedQuote) {
@@ -50,8 +52,10 @@ const Game = () => {
 
         try {
             const fetchedQuote = await getQuote();
-            if (fetchedQuote){
+            if (fetchedQuote) {
                 dispatch(setQuote(fetchedQuote));
+                // dispatch(clearChosenLetters());
+                // dispatch(setErrorsCount(0));
             }
         } catch (error) {
             console.error("Failed to fetch quote:", error);
@@ -63,23 +67,28 @@ const Game = () => {
     return (
         quote ? (
             <div className='game-container' >
-                <div className='game-container__left'>
-                    <Quote />
-                    <Button 
-                        onClick={handleGetNewQuoteButtonClick} 
-                        variant='surface' 
+                <div className='game-container-left'>
+                    <div className="hello-div">
+                        <div className="name-div">Hello, {currentUser || ''}</div>
+                        <div>This is your quote:</div>
+                    </div>
+                    <GameBoard />
+                    <Button
+                        onClick={handleGetNewQuoteButtonClick}
+                        variant='surface'
                         disabled={loading}
                     >
                         {loading ? "Loading..." : "Get New Quote"}
                     </Button>
                 </div>
-                <div className='game-container__right'>
+                <div className='game-container-right'>
+                    <GameStatus />
                     <HangmanImage className='hangman-image' />
                 </div>
             </div >
-        ) : 
-        <Loading size='large'/>    
+        ) :
+            <Loading size='large' />
     )
 }
 
-export default Game;
+export default GameContainer;

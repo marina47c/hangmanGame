@@ -5,17 +5,17 @@ import './dialog.styles.scss';
 interface DialogProps {
   title: string;
   description?: string;
-  buttonClick?: () => void;
+  onClick?: () => void;
 }
 
 const DialogDemo = (props: DialogProps) => {
-  const { title, description, buttonClick } = props;
+  const { title, description, onClick } = props;
 
   const [open, setOpen] = useState<boolean>(true);
 
   const buttonCloseClick = () => {
     setOpen(false);
-    buttonClick && buttonClick();
+    onClick && onClick();
   }
 
   return (

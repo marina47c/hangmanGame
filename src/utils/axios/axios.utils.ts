@@ -31,14 +31,14 @@ export const postHighscore = async (data: PostHighscoreData):  Promise<any> => {
   }
 }
 
-export const getHighscores = async (): Promise<GetHighscoreData | null> => {
+export const getHighscores = async (): Promise<GetHighscoreData[]> => {
   try {
     const response = await axios.get(highscoresEndpoint);
     console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('Error while getting highscore data', error);
-    return null;
+    return [];
   }
 }
 

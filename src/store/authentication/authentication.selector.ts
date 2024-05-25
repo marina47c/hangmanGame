@@ -1,1 +1,0 @@
-export const selectCurrentUser = (state: any) => state.authentication.currentUser;

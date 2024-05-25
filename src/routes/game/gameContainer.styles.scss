@@ -1,0 +1,82 @@
+.game-container {
+  display: flex;
+  flex-direction: row;
+  padding: 2%;
+  gap: 30px;
+  height: 88vh;
+
+  .game-container-left {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+
+    .game-quote {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .quote-content {
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      font-size: x-large;
+    }
+
+    .quote-author {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .game-container-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid lightgray;
+    padding: 30px;
+    border-radius: 3%;
+    width: 30%;
+  }
+
+  .hangman-image {
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  .hello-div {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .name-div {
+    font-size: larger;
+    font-weight: 600;
+  }
+}
+
+.quote-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+}
+
+.quote-content {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.quote-word, .quote-mark{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2px;
+  font-size: xx-large;
+}

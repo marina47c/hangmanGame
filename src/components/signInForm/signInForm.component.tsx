@@ -1,15 +1,12 @@
-import { FormEvent, useState, useContext } from 'react';
-import { Button } from '@radix-ui/themes/dist/cjs/components/button';
+import { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Form from '@radix-ui/react-form';
 
-import { useDispatch } from 'react-redux';
-import { setCurrentUser } from '../../store/authentication/authentication.action';
-
+import { setUser } from '../../utils/authentication/authentication.utils';
+import { Button } from '@radix-ui/themes/dist/cjs/components/button';
 import './signInForm.styles.scss'
-import { redirect, useNavigate } from 'react-router-dom';
 
 const SignInForm = () => {
-    const dispatch = useDispatch();
     let navigate = useNavigate();
 
     const [name, setName] = useState('');
@@ -20,8 +17,7 @@ const SignInForm = () => {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(setCurrentUser({name}))
-        localStorage.setItem("authenticated", "true");
+        setUser(name);
         setName('');
         navigate('/');
     }
