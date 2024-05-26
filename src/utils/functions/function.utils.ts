@@ -1,10 +1,32 @@
-export const scoreCalculation = (quoteLength: number, uniqueLettersCount: number, errorsCount: number, solvingTime: number) => {
-  const baseScore = quoteLength * 10 + uniqueLettersCount * 100;
-  const errorPenalty = errorsCount * 1000;
-  const timeBonus = Math.max(0, 600 - solvingTime); // Assuming a max time bonus for solving under 10 minutes
-  const result = baseScore + timeBonus - errorPenalty;
+export const calculateGameScore = (quoteLength: number, uniqueLettersCount: number, errorsCount: number, solvingTime: number) => {
+  const INITIAL_SCORE = 10000;
+  const ERROR_PENALTY_UNIT = 200;
+  const MAX_BONUS = ERROR_PENALTY_UNIT / 3;
+  const MAX_TIME = 300; // 300 s = 5 min 
 
-  return Math.max(result, 0);
+  // Validate input parameters
+  if (quoteLength < 0 || uniqueLettersCount < 0 || errorsCount < 0 || solvingTime < 0) {
+    console.error("Invalid input values");
+    return 0;
+  }
+
+  // Calculate error penalty
+  const errorPenalty = errorsCount * ERROR_PENALTY_UNIT;
+  let score = INITIAL_SCORE - errorPenalty;
+
+  // Calculate bonuses
+  const uniqueLettersBonus = (uniqueLettersCount / 100) * MAX_BONUS;
+  const quoteLengthBonus = (quoteLength / 100) * MAX_BONUS;
+
+  const timeInSeconds = solvingTime / 1000; // convert to seconds
+  const timeDifference = MAX_TIME - timeInSeconds;
+  const adjustedTimeDifference = Math.max(0, timeDifference)
+  const timeBonus = (adjustedTimeDifference / 100) * MAX_BONUS;
+
+  // Add bonuses to the score
+  score += uniqueLettersBonus + quoteLengthBonus + timeBonus;
+
+  return Math.round(score)
 }
 
 export const camelCaseToTitle = (camelCase: string): string => {

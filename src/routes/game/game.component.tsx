@@ -11,7 +11,7 @@ import { ReactComponent as HangmanImage } from '../../assets/hangman_logo.svg'
 import { GameStatusEnum, HighscoreData, PostHighscoreData, Quote } from "../../types/globalTypes";
 import { useFetchQuote } from "../../hooks/useFetchQuote";
 import { errorsBrakepoint, specialCharacters } from "../../types/constants";
-import { scoreCalculation } from "../../utils/functions/function.utils";
+import { calculateGameScore } from "../../utils/functions/function.utils";
 import './game.styles.scss';
 
 const Game = () => {
@@ -115,7 +115,7 @@ const Game = () => {
 
     const score = () => {
         const quoteLength: number = quote.content.length;
-        return scoreCalculation(quoteLength, uniqueCharacters, errorsCount, gameDuration);
+        return calculateGameScore(quoteLength, uniqueCharacters, errorsCount, gameDuration);
     }
 
     if (!quote) {
