@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Table } from "@radix-ui/themes";
 
 import { getHighscores } from "../../utils/axios/axios.utils";
-import { GetHighscoreData } from "../../types/globalTypes";
-import { camelCaseToTitle } from "../../utils/functions/function.utils";
+import { GetHighscoreData, TableHightScoreData } from "../../types/globalTypes";
+import { camelCaseToTitle, scoreCalculation } from "../../utils/functions/function.utils";
 import { Loading } from "../../components";
 import './scores.styles.scss';
 
@@ -15,12 +15,22 @@ const Scores = () => {
         async function getData() {
             setIsLoading(true);
             const fetchedData: GetHighscoreData[] = await getHighscores();
-            setData(fetchedData);
+            const data = createTableHighScoreData(fetchedData);
+            setData(data);
             setIsLoading(false);
         }
 
         getData();
     }, []);
+
+    const createTableHighScoreData = (data: GetHighscoreData[]) => {
+        return data
+            .map((element: GetHighscoreData) => {
+                const score: number = scoreCalculation(element.length, element.uniqueCharacters, element.errors, element.duration);
+                return { ...element, score}
+            })
+            .sort((a, b) => b.score - a.score); 
+    }
 
     const renderHeaderRow = () => {
         const headerRowData: string[] = data.length > 0 ? Object.keys(data[0]) : [];

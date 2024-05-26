@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './components';
-import { Authentication, GameContainer, Navigation, Scores } from './routes';
+import { Authentication, Game, Navigation, Scores } from './routes';
 import './App.css';
 
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
       <Route path='/' element={<Navigation />}>
         <Route index element={
           <ProtectedRoute>
-            <GameContainer />
+            <Game />
           </ProtectedRoute>
         } />
         <Route path='/auth' element={<Authentication />} />

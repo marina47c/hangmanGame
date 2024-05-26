@@ -27,3 +27,13 @@ export type PostHighscoreData = HighscoreData;
 export type GetHighscoreData = HighscoreData & {
   id: number;
 }
+
+export type TableHightScoreData = HighscoreData & {
+  score: number;
+}
+
+export enum GameStatusEnum {
+  Fail = 'fail',
+  Success = 'success',
+  Playing = 'playing',
+}

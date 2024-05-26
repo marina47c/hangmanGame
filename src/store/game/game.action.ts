@@ -1,6 +1,6 @@
 import { createAction } from "../../utils/reducer/reducer.utils";
 import { GAME_ACTION_TYPES } from "./game.types";
-import { Quote } from "../../types/globalTypes";
+import { GameStatusEnum, Quote } from "../../types/globalTypes";
 
 export const setQuote = (quote: Quote) => 
   createAction(GAME_ACTION_TYPES.SET_QUOTE, quote);
@@ -16,3 +16,9 @@ export const addChosenLetter = (letter: string) =>
 
 export const clearChosenLetters = () => 
   createAction(GAME_ACTION_TYPES.CLERAR_CHOSEN_LETTERS, []);
+
+export const setGameStatus = (gameStatus: GameStatusEnum) => 
+  createAction(GAME_ACTION_TYPES.SET_GAME_STATUS, gameStatus);
+
+export const setGameStartTime = (gameStartTime: number) => 
+  createAction(GAME_ACTION_TYPES.SET_GAME_START_TIME, gameStartTime);

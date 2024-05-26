@@ -6,20 +6,18 @@ interface DialogProps {
   title: string;
   description?: string;
   onClick?: () => void;
+  isOpen: boolean;
 }
 
 const DialogDemo = (props: DialogProps) => {
-  const { title, description, onClick } = props;
-
-  const [open, setOpen] = useState<boolean>(true);
+  const { title, description, onClick, isOpen } = props;
 
   const buttonCloseClick = () => {
-    setOpen(false);
     onClick && onClick();
   }
 
   return (
-    <Dialog.Root open={open}>
+    <Dialog.Root open={isOpen}>
       <Dialog.Portal>
         <Dialog.Overlay className="dialog-overlay" />
         <Dialog.Content className="dialog-content">

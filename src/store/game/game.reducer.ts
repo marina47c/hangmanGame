@@ -1,10 +1,13 @@
+import { GameStatusEnum } from "../../types/globalTypes";
 import { GAME_ACTION_TYPES } from "./game.types";
 
 const INITIAL_STATE = {
   quote: null,
   errorsCount: 0,
   gameDuration: null,
-  chosenLetters: []
+  chosenLetters: [],
+  gameStatus: GameStatusEnum.Playing,
+  gameStartTime: 0
 }
 
 export const gameReducer = (state = INITIAL_STATE, action: any = {}) => {
@@ -28,6 +31,12 @@ export const gameReducer = (state = INITIAL_STATE, action: any = {}) => {
 
     case GAME_ACTION_TYPES.CLERAR_CHOSEN_LETTERS:
       return { ...state, chosenLetters: [] }
+
+    case GAME_ACTION_TYPES.SET_GAME_STATUS:
+      return { ...state, gameStatus: payload}
+
+    case GAME_ACTION_TYPES.SET_GAME_START_TIME:
+      return { ...state, gameStartTime: payload}
       
     default:
       return state;
