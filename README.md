@@ -14,4 +14,5 @@ Install the folowing libraries:
 4. Navigate to the application at http://localhost:3000/
 
 ## Test
+For testing, Jest library is used. To run tests: npm run test
 
